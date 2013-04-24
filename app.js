@@ -56,8 +56,8 @@ var led_function = function(status){
 console.log('===');
 
 // Get new tumblr posts
-var tumblrPostsOld,
-	getTumblrPosts = function getTumblrPosts(){
+var tumblrPostsOld;
+var	getTumblrPosts = function getTumblrPosts(){
 	tumblr.get('/posts', {hostname: urlTumblr}, function(json){
 		var tumblrPostsNew = json.posts;
 
@@ -76,16 +76,17 @@ var tumblrPostsOld,
 				if ( ( postsNew.id == postsOld.id ) && ( postsNew.note_count != postsOld.note_count ) ) {
 					console.log( postsNew.id  + ' ' + postsNew.note_count );
 					console.log( postsOld.id + ' ' + postsOld.note_count );
-					console.log('YES');
 					gpio4.set();
 
-				//no match
+				// no match
 				} else {
 					gpio4.reset();
 				}
 			}
 		}
 		console.log( 'checked' );
+
+		// update the object to compare against for next time
 		tumblrPostsOld = tumblrPostsNew;
 	});
 };
